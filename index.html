@@ -1,447 +1,893 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jarná ITAPA 2026 - Program</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jarná ITAPA 2026 — Program</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --mint:    #4ade80;
+      --teal:    #2dd4bf;
+      --indigo:  #6366f1;
+      --violet:  #8b5cf6;
+      --coral:   #f97316;
+      --gold:    #fbbf24;
+      --bg:      #0d1117;
+      --surface: #161b22;
+      --glass:   rgba(255,255,255,.06);
+      --border:  rgba(255,255,255,.09);
+      --text:    #e6edf3;
+      --muted:   #8b949e;
+      --radius:  16px;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #333;
-        }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+    html { scroll-behavior: smooth; }
 
-        header {
-            text-align: center;
-            color: white;
-            margin-bottom: 50px;
-            animation: fadeIn 0.8s ease-in;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        header h1 {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            font-weight: 700;
-        }
+    /* ── BACKGROUND ── */
+    .bg-orbs {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+    .bg-orbs span {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: .18;
+    }
+    .bg-orbs span:nth-child(1) { width:600px; height:600px; background:var(--indigo); top:-200px; left:-200px; }
+    .bg-orbs span:nth-child(2) { width:500px; height:500px; background:var(--teal);   bottom:-150px; right:-150px; }
+    .bg-orbs span:nth-child(3) { width:350px; height:350px; background:var(--mint);   top:40%; left:40%; }
 
-        header p {
-            font-size: 1.3rem;
-            opacity: 0.95;
-            font-weight: 300;
-        }
+    /* ── LAYOUT ── */
+    .page { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 48px 20px 80px; }
 
-        header .date-info {
-            margin-top: 15px;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      margin-bottom: 56px;
+      animation: fadeUp .7s ease both;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--glass); border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      border-radius: 50px; padding: 8px 18px;
+      font-size: .8rem; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--mint);
+      margin-bottom: 24px;
+    }
+    .hero-badge svg { width:14px; height:14px; fill:currentColor; flex-shrink:0; }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #fff 30%, var(--teal) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+    }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted); font-weight: 400;
+      max-width: 480px; margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+    .hero-meta {
+      display: flex; justify-content: center; gap: 28px; flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: .9rem; color: var(--muted);
+    }
+    .hero-meta-item svg { width:16px; height:16px; flex-shrink:0; color: var(--teal); }
 
-        .filters {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            animation: fadeIn 0.8s ease-in 0.2s both;
-        }
+    /* ── DAY TABS ── */
+    .day-tabs {
+      display: flex; gap: 8px; margin-bottom: 40px;
+      overflow-x: auto; padding-bottom: 4px;
+      scrollbar-width: none;
+      animation: fadeUp .7s .15s ease both;
+    }
+    .day-tabs::-webkit-scrollbar { display: none; }
+    .day-tab {
+      flex-shrink: 0;
+      background: var(--glass); border: 1px solid var(--border);
+      color: var(--muted); border-radius: 12px;
+      padding: 14px 24px; cursor: pointer;
+      font-family: inherit; font-size: .9rem; font-weight: 600;
+      transition: all .25s ease;
+      text-align: left; line-height: 1.3;
+      backdrop-filter: blur(8px);
+    }
+    .day-tab small { display: block; font-weight: 400; font-size: .78rem; margin-top: 2px; opacity: .7; }
+    .day-tab.active {
+      background: linear-gradient(135deg, var(--indigo), var(--violet));
+      border-color: transparent; color: #fff;
+      box-shadow: 0 8px 32px rgba(99,102,241,.35);
+    }
+    .day-tab:not(.active):hover {
+      background: rgba(255,255,255,.1); color: var(--text);
+    }
 
-        .filter-btn {
-            padding: 12px 28px;
-            border: 2px solid white;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
+    /* ── FILTER PILLS ── */
+    .filters {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 36px;
+      animation: fadeUp .7s .25s ease both;
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 16px; border-radius: 50px; font-size: .82rem; font-weight: 600;
+      border: 1px solid var(--border); background: var(--glass);
+      color: var(--muted); cursor: pointer;
+      font-family: inherit; transition: all .2s ease;
+      backdrop-filter: blur(8px);
+    }
+    .pill:hover { background: rgba(255,255,255,.1); color: var(--text); }
+    .pill.active { border-color: transparent; color: #fff; }
+    .pill[data-filter="all"].active     { background: linear-gradient(135deg, var(--indigo), var(--teal)); }
+    .pill[data-filter="keynote"].active { background: linear-gradient(135deg, var(--gold), var(--coral)); color:#1a1a1a; }
+    .pill[data-filter="workshop"].active{ background: linear-gradient(135deg, var(--indigo), var(--violet)); }
+    .pill[data-filter="break"].active   { background: linear-gradient(135deg, var(--mint), var(--teal)); color:#0d2d1e; }
 
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: white;
-            color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      animation: fadeUp .7s .35s ease both;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 68px; top: 0; bottom: 0; width: 2px;
+      background: linear-gradient(to bottom, var(--indigo), var(--teal), transparent);
+      opacity: .3;
+    }
 
-        .schedule {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
-            margin-top: 30px;
-        }
+    /* ── SESSION CARD ── */
+    .session {
+      display: flex; gap: 24px; margin-bottom: 20px;
+      transition: opacity .3s, transform .3s;
+    }
+    .session.hidden { display: none; }
 
-        .time-slot {
-            background: white;
-            border-radius: 16px;
-            padding: 28px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s ease;
-            animation: slideUp 0.6s ease-out backwards;
-            border-left: 5px solid #667eea;
-            position: relative;
-            overflow: hidden;
-        }
+    .session-time {
+      flex-shrink: 0; width: 60px;
+      font-size: .78rem; font-weight: 700; color: var(--muted);
+      padding-top: 20px; text-align: right;
+      line-height: 1.4; letter-spacing: .02em;
+    }
 
-        .time-slot:nth-child(1) { animation-delay: 0s; }
-        .time-slot:nth-child(2) { animation-delay: 0.1s; }
-        .time-slot:nth-child(3) { animation-delay: 0.2s; }
-        .time-slot:nth-child(4) { animation-delay: 0.3s; }
-        .time-slot:nth-child(5) { animation-delay: 0.4s; }
-        .time-slot:nth-child(6) { animation-delay: 0.5s; }
-        .time-slot:nth-child(7) { animation-delay: 0.6s; }
-        .time-slot:nth-child(8) { animation-delay: 0.7s; }
+    .session-dot {
+      flex-shrink: 0; position: relative;
+      width: 18px; display: flex; flex-direction: column; align-items: center;
+      padding-top: 23px;
+    }
+    .session-dot::before {
+      content: '';
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      transition: all .2s;
+      flex-shrink: 0;
+    }
+    .session:hover .session-dot::before { transform: scale(1.3); }
+    .session[data-type="keynote"]  .session-dot::before { border-color: var(--gold); background: rgba(251,191,36,.15); }
+    .session[data-type="workshop"] .session-dot::before { border-color: var(--indigo); background: rgba(99,102,241,.15); }
+    .session[data-type="break"]    .session-dot::before { border-color: var(--mint); background: rgba(74,222,128,.15); }
 
-        .time-slot::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-        }
+    .session-card {
+      flex: 1; background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      backdrop-filter: blur(12px);
+      transition: all .25s ease;
+      cursor: pointer;
+      position: relative; overflow: hidden;
+    }
+    .session-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      opacity: 0; transition: opacity .25s;
+    }
+    .session[data-type="keynote"]  .session-card::before { background: linear-gradient(90deg, var(--gold), var(--coral)); }
+    .session[data-type="workshop"] .session-card::before { background: linear-gradient(90deg, var(--indigo), var(--violet)); }
+    .session[data-type="break"]    .session-card::before { background: linear-gradient(90deg, var(--mint), var(--teal)); }
 
-        .time-slot:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-        }
+    .session-card:hover {
+      background: rgba(255,255,255,.09);
+      border-color: rgba(255,255,255,.18);
+      transform: translateY(-2px);
+      box-shadow: 0 16px 48px rgba(0,0,0,.3);
+    }
+    .session-card:hover::before { opacity: 1; }
 
-        .time-slot[data-type="keynote"] {
-            border-left-color: #ffd700;
-            background: linear-gradient(135deg, #fffbf0 0%, #fff 100%);
-        }
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
 
-        .time-slot[data-type="keynote"]::before {
-            background: linear-gradient(90deg, #ffd700, #ffed4e);
-        }
+    .session-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 6px; flex-shrink: 0;
+    }
+    .session[data-type="keynote"]  .session-tag { background: rgba(251,191,36,.15); color: var(--gold); }
+    .session[data-type="workshop"] .session-tag { background: rgba(99,102,241,.15); color: #a5b4fc; }
+    .session[data-type="break"]    .session-tag { background: rgba(74,222,128,.12); color: var(--mint); }
 
-        .time-slot[data-type="break"] {
-            border-left-color: #51cf66;
-            background: linear-gradient(135deg, #f1fce4 0%, #fff 100%);
-        }
+    .session-room {
+      font-size: .78rem; color: var(--muted);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .session-room svg { width:12px; height:12px; flex-shrink:0; }
 
-        .time-slot[data-type="break"]::before {
-            background: linear-gradient(90deg, #51cf66, #69db7c);
-        }
+    .session-title {
+      font-size: 1.05rem; font-weight: 700; color: var(--text);
+      line-height: 1.35; margin-bottom: 8px;
+    }
 
-        .time {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #667eea;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .session-speaker {
+      display: flex; align-items: center; gap: 8px;
+      font-size: .85rem; color: #a5b4fc; font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .avatar {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--indigo), var(--violet));
+      display: flex; align-items: center; justify-content: center;
+      font-size: .65rem; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
 
-        .time::before {
-            content: '🕐';
-        }
+    .session-desc {
+      font-size: .85rem; color: var(--muted); line-height: 1.6;
+      margin-bottom: 14px; display: none;
+    }
+    .session-card.expanded .session-desc { display: block; }
 
-        .room {
-            font-size: 0.95rem;
-            color: #888;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+    .session-tags-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .badge {
+      font-size: .73rem; font-weight: 600; padding: 4px 10px; border-radius: 6px;
+      background: rgba(255,255,255,.07); color: var(--muted); border: 1px solid var(--border);
+    }
 
-        .room::before {
-            content: '📍';
-        }
+    .expand-btn {
+      position: absolute; bottom: 16px; right: 16px;
+      width: 28px; height: 28px; border-radius: 8px;
+      background: rgba(255,255,255,.07); border: 1px solid var(--border);
+      color: var(--muted); display: flex; align-items: center; justify-content: center;
+      transition: all .2s; cursor: pointer; font-size: .85rem;
+    }
+    .session-card:hover .expand-btn { color: var(--text); background: rgba(255,255,255,.12); }
+    .session-card.expanded .expand-btn { transform: rotate(180deg); }
 
-        .title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
+    /* ── EMPTY ── */
+    .empty { text-align: center; padding: 64px 20px; color: var(--muted); display: none; }
+    .empty.show { display: block; }
+    .empty-icon { font-size: 3rem; margin-bottom: 16px; }
 
-        .speaker {
-            font-size: 0.95rem;
-            color: #764ba2;
-            margin-bottom: 14px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+    /* ── STATS BAR ── */
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 12px; margin-bottom: 48px;
+      animation: fadeUp .7s .1s ease both;
+    }
+    .stat-card {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px;
+      backdrop-filter: blur(8px); text-align: center;
+    }
+    .stat-num {
+      font-size: 2rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--teal), var(--indigo));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .stat-label { font-size: .78rem; color: var(--muted); margin-top: 4px; font-weight: 500; }
 
-        .speaker::before {
-            content: '👤';
-        }
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-        .description {
-            font-size: 0.95rem;
-            color: #666;
-            margin-bottom: 16px;
-            line-height: 1.5;
-            font-weight: 400;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 6px 14px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .time-slot[data-type="keynote"] .tag {
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            color: #333;
-        }
-
-        .time-slot[data-type="break"] .tag {
-            background: linear-gradient(135deg, #51cf66, #69db7c);
-            color: white;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2.5rem;
-            }
-
-            header p {
-                font-size: 1.1rem;
-            }
-
-            .schedule {
-                grid-template-columns: 1fr;
-            }
-
-            .filters {
-                gap: 8px;
-            }
-
-            .filter-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-        }
-
-        .empty-state {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 60px 20px;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .empty-state-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-    </style>
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .timeline::before { left: 52px; }
+      .session-time { width: 44px; font-size: .72rem; }
+      .session-card { padding: 16px; }
+      .session-title { font-size: .97rem; }
+      .stats { grid-template-columns: repeat(3,1fr); }
+      .stat-num { font-size: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🎯 Jarná ITAPA 2026</h1>
-            <p>Program Konferencie</p>
-            <div class="date-info">
-                📅 22. - 24. apríl 2026
-            </div>
-        </header>
 
-        <div class="filters">
-            <button class="filter-btn active" onclick="filterSchedule('all')">Všetko</button>
-            <button class="filter-btn" onclick="filterSchedule('keynote')">🎤 Keynote</button>
-            <button class="filter-btn" onclick="filterSchedule('workshop')">🛠️ Workshopy</button>
-            <button class="filter-btn" onclick="filterSchedule('break')">☕ Prestávky</button>
+<div class="bg-orbs" aria-hidden="true">
+  <span></span><span></span><span></span>
+</div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-badge">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 17.93V18a1 1 0 0 0-2 0v1.93A8 8 0 0 1 4.07 13H6a1 1 0 0 0 0-2H4.07A8 8 0 0 1 11 4.07V6a1 1 0 0 0 2 0V4.07A8 8 0 0 1 19.93 11H18a1 1 0 0 0 0 2h1.93A8 8 0 0 1 13 19.93Z"/></svg>
+      Konferencia
+    </div>
+    <h1>Jarná ITAPA 2026</h1>
+    <p class="hero-sub">Program konferencie — tri dni plné inšpirácie, workshopov a networkingu</p>
+    <div class="hero-meta">
+      <span class="hero-meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        22. – 24. apríl 2026
+      </span>
+      <span class="hero-meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Bratislava, Hotel Bôrik
+      </span>
+      <span class="hero-meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        320 účastníkov
+      </span>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-card"><div class="stat-num">24</div><div class="stat-label">Prednášok</div></div>
+    <div class="stat-card"><div class="stat-num">18</div><div class="stat-label">Rečníkov</div></div>
+    <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Dni</div></div>
+  </div>
+
+  <!-- DAY TABS -->
+  <div class="day-tabs" role="tablist">
+    <button class="day-tab active" data-day="1" role="tab">
+      Streda <small>22. apríl</small>
+    </button>
+    <button class="day-tab" data-day="2" role="tab">
+      Štvrtok <small>23. apríl</small>
+    </button>
+    <button class="day-tab" data-day="3" role="tab">
+      Piatok <small>24. apríl</small>
+    </button>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters" role="group" aria-label="Filter podľa typu">
+    <button class="pill active" data-filter="all">Všetko</button>
+    <button class="pill" data-filter="keynote">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L15.09 8.26L23 9.27L17.5 14.14L18.88 22L12 18.5L5.12 22L6.5 14.14L1 9.27L8.91 8.26L12 1Z"/></svg>
+      Keynote
+    </button>
+    <button class="pill" data-filter="workshop">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Workshop
+    </button>
+    <button class="pill" data-filter="break">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+      Prestávky
+    </button>
+  </div>
+
+  <!-- TIMELINE -->
+  <main class="timeline" id="timeline">
+
+    <!-- ══ DEŇ 1 ══ -->
+    <div class="session" data-day="1" data-type="break">
+      <div class="session-time">09:00<br/>09:30</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">Registrácia</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Vestibul
+          </span>
         </div>
-
-        <div class="schedule" id="schedule">
-            <!-- 09:00 - Registrácia -->
-            <div class="time-slot" data-type="break">
-                <div class="time">09:00 - 09:30</div>
-                <div class="room">Vestibul</div>
-                <div class="title">Registrácia Účastníkov</div>
-                <div class="speaker">Tím ITAPA</div>
-                <div class="description">Privítajte sa s kolegami, získajte svoje ID karty a materiály konferencie.</div>
-                <div class="tags">
-                    <span class="tag">Úvodná aktivita</span>
-                </div>
-            </div>
-
-            <!-- 09:30 - Keynote 1 -->
-            <div class="time-slot" data-type="keynote">
-                <div class="time">09:30 - 10:30</div>
-                <div class="room">Hlavná Sála</div>
-                <div class="title">Budúcnosť Technológií v Podnikaní</div>
-                <div class="speaker">Marián Dubský</div>
-                <div class="description">Zistite, ako AI a cloud technológie transformujú modernú IT infraštruktúru a aké sú trendy na rok 2026.</div>
-                <div class="tags">
-                    <span class="tag">AI & Technológia</span>
-                    <span class="tag">Trending</span>
-                </div>
-            </div>
-
-            <!-- 10:45 - Workshop 1 -->
-            <div class="time-slot" data-type="workshop">
-                <div class="time">10:45 - 12:15</div>
-                <div class="room">Sála A</div>
-                <div class="title">Praktický Workshop: Modern Web Development</div>
-                <div class="speaker">Tomáš Pavlíček</div>
-                <div class="description">Naučte sa najnovšie best practices vo vývoji webových aplikácií s React a Next.js. Praktické ukážky s live kódovaním.</div>
-                <div class="tags">
-                    <span class="tag">Web Development</span>
-                    <span class="tag">Praktické</span>
-                    <span class="tag">React</span>
-                </div>
-            </div>
-
-            <!-- 12:15 - Obed -->
-            <div class="time-slot" data-type="break">
-                <div class="time">12:15 - 13:00</div>
-                <div class="room">Reštaurácia</div>
-                <div class="title">Obedná Prestávka</div>
-                <div class="speaker">Catering Tím</div>
-                <div class="description">Vychutnajte si chutné jedlo a neformálny čas na sieti s kolegami a lektormi.</div>
-                <div class="tags">
-                    <span class="tag">Networking</span>
-                    <span class="tag">Oddych</span>
-                </div>
-            </div>
-
-            <!-- 13:00 - Workshop 2 -->
-            <div class="time-slot" data-type="workshop">
-                <div class="time">13:00 - 14:30</div>
-                <div class="room">Sála B</div>
-                <div class="title">DevOps a Cloud Deployment: Od Teórie k Praxi</div>
-                <div class="speaker">Katarína Oravcová</div>
-                <div class="description">Hlboký ponor do DevOps praktík, CI/CD pipelinov a automatizácie deployment procesov. Príklady s Docker a Kubernetes.</div>
-                <div class="tags">
-                    <span class="tag">DevOps</span>
-                    <span class="tag">Cloud</span>
-                    <span class="tag">Automatizácia</span>
-                </div>
-            </div>
-
-            <!-- 14:45 - Keynote 2 -->
-            <div class="time-slot" data-type="keynote">
-                <div class="time">14:45 - 15:45</div>
-                <div class="room">Hlavná Sála</div>
-                <div class="title">Bezpečnosť IT v Ére Hybridného Pracovného Prostredia</div>
-                <div class="speaker">Vladimír Kováč</div>
-                <div class="description">Diskusia o bezpečnostných hrozbách, best practices a nových spôsoboch ochrany dát v distribuovanom pracovnom prostredí.</div>
-                <div class="tags">
-                    <span class="tag">Bezpečnosť</span>
-                    <span class="tag">Cybersecurity</span>
-                    <span class="tag">Best Practices</span>
-                </div>
-            </div>
-
-            <!-- 16:00 - Panel Diskusia -->
-            <div class="time-slot" data-type="workshop">
-                <div class="time">16:00 - 17:30</div>
-                <div class="room">Hlavná Sála</div>
-                <div class="title">Panel Diskusia: Výzvy a Riešenia v IT Projekte</div>
-                <div class="speaker">Diskusia s odborníkmi</div>
-                <div class="description">Účastníci diskusie si budú dzielať svoje skúsenosti z reálnych projektov, problémov a inovatívnych riešení. Možnosť položiť otázky!</div>
-                <div class="tags">
-                    <span class="tag">Diskusia</span>
-                    <span class="tag">Q&A</span>
-                    <span class="tag">Skúsenosti</span>
-                </div>
-            </div>
-
-            <!-- 18:00 - Networking Event -->
-            <div class="time-slot" data-type="break">
-                <div class="time">18:00 - 20:00</div>
-                <div class="room">Terasa & Lounge</div>
-                <div class="title">Networking Event & Oslava</div>
-                <div class="speaker">Tím ITAPA</div>
-                <div class="description">Neformálny čas na sieťovanie s jednotlivými prednášajúcimi, kolegami a partnermi. Voľný program, občerstvenie a hudba!</div>
-                <div class="tags">
-                    <span class="tag">Networking</span>
-                    <span class="tag">Sociálne</span>
-                    <span class="tag">Relaxácia</span>
-                </div>
-            </div>
+        <div class="session-title">Registrácia a privítanie účastníkov</div>
+        <div class="session-speaker">
+          <div class="avatar">IT</div>
+          Tím ITAPA
         </div>
+        <div class="session-desc">Získajte akreditáciu, konferenčné materiály a bag. Stretnite sa s kolegami pri rannej káve v priestoroch vestibulu.</div>
+        <div class="session-tags-row">
+          <span class="badge">Úvod</span>
+          <span class="badge">Networking</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
     </div>
 
-    <script>
-        function filterSchedule(type) {
-            const slots = document.querySelectorAll('.time-slot');
-            const buttons = document.querySelectorAll('.filter-btn');
+    <div class="session" data-day="1" data-type="keynote">
+      <div class="session-time">09:30<br/>10:30</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">★ Keynote</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Hlavná sála
+          </span>
+        </div>
+        <div class="session-title">Budúcnosť technológií v digitálnom štáte</div>
+        <div class="session-speaker">
+          <div class="avatar">MD</div>
+          Marián Dubský
+        </div>
+        <div class="session-desc">Úvodná keynote sa zameriava na to, ako AI, cloud a dátová ekonomika formujú verejnú správu v horizonte 2026–2030. Prednášajúci predstaví konkrétne príklady z praxe a výzvy, ktorým čelí slovenský digitálny ekosystém.</div>
+        <div class="session-tags-row">
+          <span class="badge">AI</span>
+          <span class="badge">Digitálny štát</span>
+          <span class="badge">Trendy 2026</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
 
-            // Update active button
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+    <div class="session" data-day="1" data-type="break">
+      <div class="session-time">10:30<br/>10:45</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">☕ Prestávka</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Lobby
+          </span>
+        </div>
+        <div class="session-title">Kávová prestávka</div>
+        <div class="session-speaker">
+          <div class="avatar">☕</div>
+          Catering
+        </div>
+        <div class="session-desc">Krátka prestávka s kávou, čajom a čerstvým pečivom.</div>
+        <div class="session-tags-row"><span class="badge">Oddych</span></div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
 
-            // Filter slots
-            slots.forEach(slot => {
-                if (type === 'all' || slot.dataset.type === type) {
-                    slot.classList.remove('hidden');
-                } else {
-                    slot.classList.add('hidden');
-                }
-            });
-        }
+    <div class="session" data-day="1" data-type="workshop">
+      <div class="session-time">10:45<br/>12:15</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">⌨ Workshop</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Sála A
+          </span>
+        </div>
+        <div class="session-title">Praktický workshop: Moderné webové aplikácie</div>
+        <div class="session-speaker">
+          <div class="avatar">TP</div>
+          Tomáš Pavlíček
+        </div>
+        <div class="session-desc">Hands-on workshop zameraný na best practices vývoja webových aplikácií. Prejdeme si React 19, Server Components a deployment na edge infraštruktúre. Prineste si laptop — budeme live kódovať.</div>
+        <div class="session-tags-row">
+          <span class="badge">React</span>
+          <span class="badge">Web Dev</span>
+          <span class="badge">Praktické</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
 
-        // Add smooth scroll behavior
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
+    <div class="session" data-day="1" data-type="break">
+      <div class="session-time">12:15<br/>13:00</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">🍽 Obed</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Reštaurácia
+          </span>
+        </div>
+        <div class="session-title">Obedná prestávka</div>
+        <div class="session-speaker">
+          <div class="avatar">🍴</div>
+          Catering
+        </div>
+        <div class="session-desc">Teplý obed v hotelskej reštaurácii. Výber z troch menu vrátane vegetariánskej alternatívy.</div>
+        <div class="session-tags-row"><span class="badge">Networking</span><span class="badge">Oddych</span></div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+    <div class="session" data-day="1" data-type="workshop">
+      <div class="session-time">13:00<br/>14:30</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">⌨ Workshop</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Sála B
+          </span>
+        </div>
+        <div class="session-title">DevOps a Cloud: Od teórie k praxi</div>
+        <div class="session-speaker">
+          <div class="avatar">KO</div>
+          Katarína Oravcová
+        </div>
+        <div class="session-desc">Hlboký ponor do CI/CD pipelinov, Kubernetes orchestrácie a GitOps workflow. Ukážeme si reálnu produkčnú architektúru a ako predchádzať najčastejším chybám.</div>
+        <div class="session-tags-row">
+          <span class="badge">DevOps</span>
+          <span class="badge">Kubernetes</span>
+          <span class="badge">Cloud</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+    <div class="session" data-day="1" data-type="keynote">
+      <div class="session-time">14:45<br/>15:45</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">★ Keynote</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Hlavná sála
+          </span>
+        </div>
+        <div class="session-title">Kybernetická bezpečnosť v hybridnom svete</div>
+        <div class="session-speaker">
+          <div class="avatar">VK</div>
+          Vladimír Kováč
+        </div>
+        <div class="session-desc">Najnovšie hrozby, zero-trust architektúra a ako chrániť organizáciu v prostredí remote work a multi-cloud. Prednáška obsahuje reálne prípadové štúdie z posledného roka.</div>
+        <div class="session-tags-row">
+          <span class="badge">Cybersecurity</span>
+          <span class="badge">Zero Trust</span>
+          <span class="badge">Best Practices</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+    <div class="session" data-day="1" data-type="workshop">
+      <div class="session-time">16:00<br/>17:30</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">💬 Panel</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Hlavná sála
+          </span>
+        </div>
+        <div class="session-title">Panelová diskusia: Výzvy a riešenia v IT projektoch</div>
+        <div class="session-speaker">
+          <div class="avatar">👥</div>
+          Viacero odborníkov
+        </div>
+        <div class="session-desc">Päť odborníkov z praxe zdieľa skúsenosti z reálnych projektov. Otvorená diskusia, možnosť klásť otázky z publika. Témy: digitalizácia VS, agilné metódy, outsourcing vs. insourcing.</div>
+        <div class="session-tags-row">
+          <span class="badge">Q&A</span>
+          <span class="badge">Diskusia</span>
+          <span class="badge">Skúsenosti</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+    <div class="session" data-day="1" data-type="break">
+      <div class="session-time">18:00<br/>20:00</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">🎉 Networking</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Terasa & Lounge
+          </span>
+        </div>
+        <div class="session-title">Networking Event — Otvorenie konferencie</div>
+        <div class="session-speaker">
+          <div class="avatar">IT</div>
+          Tím ITAPA
+        </div>
+        <div class="session-desc">Neformálne stretnutie všetkých účastníkov na terase. Živá hudba, catering a príležitosť spoznať rečníkov i partnerov konferencie.</div>
+        <div class="session-tags-row">
+          <span class="badge">Networking</span>
+          <span class="badge">Sociálne</span>
+          <span class="badge">Hudba</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+    <!-- ══ DEŇ 2 ══ -->
+    <div class="session" data-day="2" data-type="keynote" style="display:none">
+      <div class="session-time">09:00<br/>10:00</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">★ Keynote</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Hlavná sála
+          </span>
+        </div>
+        <div class="session-title">Generatívna AI v každodennej práci IT tímov</div>
+        <div class="session-speaker">
+          <div class="avatar">JS</div>
+          Jana Slováková
+        </div>
+        <div class="session-desc">Ako zaradiť LLM, copiloty a AI agentov do reálnych pracovných postupov. Príklady z praxe, meranie produktivity a etické úvahy.</div>
+        <div class="session-tags-row">
+          <span class="badge">AI</span>
+          <span class="badge">LLM</span>
+          <span class="badge">Produktivita</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+    <div class="session" data-day="2" data-type="workshop" style="display:none">
+      <div class="session-time">10:15<br/>12:00</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">⌨ Workshop</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Sála C
+          </span>
+        </div>
+        <div class="session-title">Dátová architektúra pre moderný podnik</div>
+        <div class="session-speaker">
+          <div class="avatar">MH</div>
+          Michal Horváth
+        </div>
+        <div class="session-desc">Data mesh, data lakehouse a real-time streaming — kedy použiť čo. Praktické porovnanie architectúr s ukážkami na Azure a AWS.</div>
+        <div class="session-tags-row">
+          <span class="badge">Data</span>
+          <span class="badge">Cloud</span>
+          <span class="badge">Architektúra</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+    <div class="session" data-day="2" data-type="break" style="display:none">
+      <div class="session-time">12:00<br/>13:00</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">🍽 Obed</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Reštaurácia
+          </span>
+        </div>
+        <div class="session-title">Obedná prestávka</div>
+        <div class="session-speaker"><div class="avatar">🍴</div>Catering</div>
+        <div class="session-desc">Bufetový obed s výberom teplých a studených jedál.</div>
+        <div class="session-tags-row"><span class="badge">Oddych</span></div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+    <div class="session" data-day="2" data-type="workshop" style="display:none">
+      <div class="session-time">13:00<br/>14:30</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">⌨ Workshop</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Sála A
+          </span>
+        </div>
+        <div class="session-title">UX/UI Design Systems v 2026</div>
+        <div class="session-speaker">
+          <div class="avatar">ZN</div>
+          Zuzana Nováková
+        </div>
+        <div class="session-desc">Ako budovať a udržiavať design system pre veľké organizácie. Figma, Storybook, automatizácia dokumentácie a spolupráca dizajnérov s vývojármi.</div>
+        <div class="session-tags-row">
+          <span class="badge">UX/UI</span>
+          <span class="badge">Design System</span>
+          <span class="badge">Figma</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+    <div class="session" data-day="2" data-type="keynote" style="display:none">
+      <div class="session-time">15:00<br/>16:00</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">★ Keynote</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Hlavná sála
+          </span>
+        </div>
+        <div class="session-title">Platobné systémy budúcnosti: CBDC a Open Banking</div>
+        <div class="session-speaker">
+          <div class="avatar">PB</div>
+          Peter Baláž
+        </div>
+        <div class="session-desc">Pohľad na európske regulačné trendy, digitálne euro a ako Open Banking mení finančný sektor. Čo to znamená pre IT architektúru bánk a fintech startupov.</div>
+        <div class="session-tags-row">
+          <span class="badge">Fintech</span>
+          <span class="badge">Open Banking</span>
+          <span class="badge">Regulácia</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+    <!-- ══ DEŇ 3 ══ -->
+    <div class="session" data-day="3" data-type="keynote" style="display:none">
+      <div class="session-time">09:00<br/>10:00</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">★ Keynote</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Hlavná sála
+          </span>
+        </div>
+        <div class="session-title">Slovensko v európskej digitálnej agende</div>
+        <div class="session-speaker">
+          <div class="avatar">AB</div>
+          Andrea Blahová
+        </div>
+        <div class="session-desc">Záverečná keynote mapuje pozíciu Slovenska v kontexte európskych digitálnych stratégií — EU AI Act, Data Governance Act a Digital Services Act. Kde sme a kam smerujeme.</div>
+        <div class="session-tags-row">
+          <span class="badge">EU Politika</span>
+          <span class="badge">Stratégia</span>
+          <span class="badge">AI Act</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+    <div class="session" data-day="3" data-type="workshop" style="display:none">
+      <div class="session-time">10:15<br/>12:00</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">⌨ Workshop</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Sála A + B
+          </span>
+        </div>
+        <div class="session-title">Hackathon: Riešenia pre smart city</div>
+        <div class="session-speaker">
+          <div class="avatar">👥</div>
+          Tímy účastníkov
+        </div>
+        <div class="session-desc">Skupinová práca na reálnych výzvach slovenských miest. Tímy prezentujú prototypy pred porotou zloženou z odborníkov z verejnej a súkromnej sféry.</div>
+        <div class="session-tags-row">
+          <span class="badge">Smart City</span>
+          <span class="badge">Inovácie</span>
+          <span class="badge">Hackathon</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+    <div class="session" data-day="3" data-type="break" style="display:none">
+      <div class="session-time">12:00<br/>13:00</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">🍽 Obed</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Reštaurácia
+          </span>
+        </div>
+        <div class="session-title">Záverečný obed</div>
+        <div class="session-speaker"><div class="avatar">🍴</div>Catering</div>
+        <div class="session-desc">Záverečný bufetový obed konferencie.</div>
+        <div class="session-tags-row"><span class="badge">Oddych</span></div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+    <div class="session" data-day="3" data-type="keynote" style="display:none">
+      <div class="session-time">13:00<br/>14:00</div>
+      <div class="session-dot"></div>
+      <div class="session-card" tabindex="0">
+        <div class="card-top">
+          <span class="session-tag">★ Záver</span>
+          <span class="session-room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Hlavná sála
+          </span>
+        </div>
+        <div class="session-title">Záverečné slovo a odovzdávanie cien</div>
+        <div class="session-speaker">
+          <div class="avatar">IT</div>
+          Organizačný výbor ITAPA
+        </div>
+        <div class="session-desc">Zhrnutie konferencie, odovzdávanie ocenení ITAPA Awards 2026 a pozvánka na Jesennú ITAPA. Ďakujeme za vašu účasť!</div>
+        <div class="session-tags-row">
+          <span class="badge">Záver</span>
+          <span class="badge">Awards</span>
+        </div>
+        <div class="expand-btn" aria-label="Rozbaliť detail">▾</div>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="empty" id="empty">
+    <div class="empty-icon">🔍</div>
+    <p>Žiadne výsledky pre zvolený filter.</p>
+  </div>
+
+</div>
+
+<script>
+  const sessions = document.querySelectorAll('.session');
+  const dayTabs  = document.querySelectorAll('.day-tab');
+  const pills    = document.querySelectorAll('.pill');
+  const empty    = document.getElementById('empty');
+
+  let activeDay    = '1';
+  let activeFilter = 'all';
+
+  function applyFilters() {
+    let visible = 0;
+    sessions.forEach(s => {
+      const dayMatch    = s.dataset.day === activeDay;
+      const filterMatch = activeFilter === 'all' || s.dataset.type === activeFilter;
+      if (dayMatch && filterMatch) {
+        s.style.display = 'flex';
+        visible++;
+      } else {
+        s.style.display = 'none';
+      }
+    });
+    empty.classList.toggle('show', visible === 0);
+  }
+
+  dayTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      dayTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeDay = tab.dataset.day;
+      applyFilters();
+    });
+  });
+
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      activeFilter = pill.dataset.filter;
+      applyFilters();
+    });
+  });
+
+  document.querySelectorAll('.session-card').forEach(card => {
+    card.addEventListener('click', () => card.classList.toggle('expanded'));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('expanded'); }
+    });
+  });
+
+  applyFilters();
+</script>
 </body>
 </html>

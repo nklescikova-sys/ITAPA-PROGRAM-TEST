@@ -62,6 +62,9 @@ export function MapScreen() {
         <div className="sk-map">
           <svg viewBox="0 0 400 210" aria-label="Mapa Slovenska">
             <path d={SLOVAKIA_OUTLINE} className="sk-land" />
+            {/* tieňovaný reliéf (scripts/relief-build.py) */}
+            <image href={`${import.meta.env.BASE_URL}images/mapa-reliefu.webp`} x={0} y={0} width={400} height={210} />
+            <path d={SLOVAKIA_OUTLINE} className="sk-border" />
             <path d={RIVER_DANUBE} className="sk-river" />
             <path d={RIVER_MORAVA} className="sk-river thin" />
             {CITIES.map((c) => {
@@ -73,12 +76,6 @@ export function MapScreen() {
                 </g>
               );
             })}
-            {/* Tatry */}
-            <g className="sk-mountains" transform={`translate(${placeXY('tatry')[0] - 25} ${placeXY('tatry')[1] - 8})`}>
-              <path d="M0 18 L14 0 L28 18 Z" />
-              <path d="M18 18 L34 -6 L50 18 Z" />
-              <path d="M30 4 L34 -6 L38 4 Z" className="snow" />
-            </g>
             {/* les – Poľana */}
             <g className="sk-forest" transform={`translate(${placeXY('les')[0] - 14} ${placeXY('les')[1] + 16})`}>
               {[0, 14, 28].map((x) => (

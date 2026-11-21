@@ -226,12 +226,14 @@ img { user-select: none; -webkit-user-drag: none; }
 .map-layout { flex: 1; display: flex; gap: 16px; align-items: center; justify-content: center; min-height: 0; }
 .sk-map { container-type: inline-size; position: relative; width: min(100%, 900px, calc((100dvh - 140px) * 400 / 210)); aspect-ratio: 400 / 210; }
 .sk-map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.sk-land { fill: #eef8e6; stroke: var(--green); stroke-width: 2; stroke-linejoin: round; }
+.sk-land { fill: #eef8e6; }
+.sk-border { fill: none; stroke: #6f7f62; stroke-width: 1; stroke-linejoin: round; }
 .sk-river { fill: none; stroke: #8cc8ec; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
 .sk-river.thin { stroke-width: 2.5; }
 .sk-city circle { fill: #fff; stroke: #7a8a74; stroke-width: 1.2; }
 .sk-city text, .sk-label { font-size: 7px; fill: #7a8a74; font-weight: 600; pointer-events: none; }
-.sk-label { fill: #5c7a50; }
+.sk-label { fill: #3f5a34; paint-order: stroke; stroke: rgba(255, 255, 255, 0.85); stroke-width: 2.4px; stroke-linejoin: round; }
+.sk-city text { paint-order: stroke; stroke: rgba(255, 255, 255, 0.85); stroke-width: 2.4px; }
 .sk-mountains path { fill: #b9a99a; }
 .sk-mountains .snow { fill: #fff; }
 .sk-forest path { fill: #5fae4a; }

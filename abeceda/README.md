@@ -319,11 +319,11 @@ najprv zobrazí výber dieťaťa). QR kódy sa dajú stiahnuť aj v aplikácii v
 abeceda/
 ├── .env                    adresa aplikácie (VITE_BASE_URL)
 ├── public/
-│   ├── images/             obrázky zvieratiek (zatiaľ zástupné SVG)
+│   ├── images/             obrázky zvieratiek (zatiaľ zástupné SVG) a 3D reliéf mapy
 │   ├── audio/sk, audio/en  MP3 nahrávky (zatiaľ prázdne → syntetický hlas)
 │   └── icons/              ikony aplikácie
 ├── qr/                     vygenerované QR kódy
-├── scripts/                qr.ts, audio-list.ts, placeholders.ts
+├── scripts/                qr.ts, audio-list.ts, placeholders.ts, map-build.ts, relief-build.py
 ├── src/
 │   ├── content/            ← OBSAH (meníte tu)
 │   │   ├── letters.ts      písmená, zvieratká, zaujímavosti, angličtina, tipy, APP_NAME
@@ -418,6 +418,13 @@ Testy v `tests/tracing.test.ts` overujú:
   | Svet: Amerika / more / Austrália | aligátor / delfín / emu | aligátor severoamerický, delfíny v moriach, emu v Austrálii |
 
   Orientačne sú vyznačené aj Bratislava a Košice. Mapu pregeneruje skript `scripts/map-build.ts` (návod je v ňom).
+  **3D (tieňovaný) reliéf** `public/images/mapa-reliefu.webp` je vygenerovaný skriptom `scripts/relief-build.py`
+  z verejných výškových údajov [Terrain Tiles na AWS](https://registry.opendata.aws/terrain-tiles/)
+  (Mapzen; zdroje SRTM/NASA a ďalšie otvorené dáta). Farby podľa nadmorskej výšky (nížiny zelené, hory
+  hnedé), svetlo zo severozápadu, hory 2,2× prevýšené. Farby a tieňovanie sa dajú upraviť v skripte
+  (`stops`, `exag`, `light`) a obrázok vygenerovať znova (`python3 scripts/relief-build.py geo/`, potrebuje numpy a pillow).
+  Ak budete mať vlastnú kreslenú mapu (napr. od ilustrátora), stačí nahradiť tento obrázok – musí mať
+  rovnaký pomer strán 400 : 210 a rovnakú projekciu, inak treba posunúť súradnice miest.
   Na mobile na výšku je mapa menšia, lepšie sa na nej hrá na šírku alebo na tablete.
   Tatry sú zatiaľ prázdne (žiadne zvieratko A–E tam nepatrí).
 - **Písmo:** Baloo 2 je uložené lokálne v aplikácii (iba latinka a latinka s diakritikou). Aplikácia nerobí žiadne požiadavky na cudzie servery.

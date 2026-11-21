@@ -146,7 +146,7 @@ Logiku netreba meniť. Upravíte len obsah v priečinku `src/content/`:
    - `join(...)` – spojí časti do jedného ťahu, `dot(x, y)` – bodka.
    Súradnice: pozri [časť 6](#6-definície-ťahov-na-kontrolu-odborníkom).
 3. **`public/images/`** – pridajte obrázok zvieratka (alebo spustite `npm run obrazky` pre zástupný obrázok).
-4. Ak zvieratko patrí na nové miesto na mape, doplňte ho do `src/content/map.ts` a do typu `MapPlaceId` v `src/content/types.ts`.
+4. Ak zvieratko patrí na nové miesto na mape, doplňte ho do `src/content/map.ts` (názov, zemepisná dĺžka a šírka, napr. z Google Máp) a do typu `MapPlaceId` v `src/content/types.ts`. Zvieratkám zo „Sveta“ vyplňte `worldPlace` (napr. „Afrika“).
 5. Spustite `npm test` – test automaticky skontroluje, že sa každé písmeno dá obtiahnuť podľa definície.
 6. Spustite `npm run qr` – vygeneruje sa aj QR kód nového písmena.
 
@@ -329,7 +329,9 @@ abeceda/
 │   │   ├── letters.ts      písmená, zvieratká, zaujímavosti, angličtina, tipy, APP_NAME
 │   │   ├── strokes.ts      definície ťahov písmen
 │   │   ├── phrases.ts      všetky vety, ktoré hovorí hlas, a názvy MP3 súborov
-│   │   ├── map.ts          miesta na mape Slovenska
+│   │   ├── map.ts          miesta na mape Slovenska (skutočné súradnice)
+│   │   ├── map-geo.ts      obrys Slovenska a rieky (vygenerované z Natural Earth)
+│   │   ├── map-projection.ts prepočet súradníc na mapu
 │   │   └── types.ts        dátové typy
 │   ├── lib/                ← LOGIKA
 │   │   ├── tracing.ts      vyhodnocovanie obťahovania (bez závislosti na prehliadači, testované)
@@ -402,7 +404,21 @@ Testy v `tests/tracing.test.ts` overujú:
 - **Nastavenia** (presnosť, ľaváci, hlasitosť, zvuky) sú spoločné pre celé zariadenie, nie pre každý profil.
 - **Ochrana rodičovskej časti:** podržanie 3 s a príklad na sčítanie (súčet do 18) s výberom z 3 možností.
   Po odchode z rodičovskej časti sa treba znova overiť.
-- **Mapa:** kreslený obrys Slovenska (nie presná geografia) s miestami Dunaj, dedina, les, Tatry, lúka a zónou „Svet“ 🌍.
+- **Mapa:** obrys Slovenska a rieky Dunaj a Morava sú zo skutočných geografických údajov
+  [Natural Earth](https://www.naturalearthdata.com) (public domain), zjednodušené pre deti. Miesta majú skutočné
+  zemepisné súradnice (`src/content/map.ts`) a pri každom je zdôvodnenie (`why`):
+
+  | Miesto | Zvieratko | Prečo |
+  | --- | --- | --- |
+  | Dunajské luhy (Dunaj od Bratislavy po Gabčíkovo) | bobor | bobry sa koncom 70. rokov vrátili na Dunaj a Moravu, žijú v lužných lesoch |
+  | Topoľčianky | žriebä | Národný žrebčín Topoľčianky, každý rok sa tam rodia žriebätá |
+  | Poľana | ďateľ | ďateľ veľký žije vo všetkých druhoch lesov, Poľana je veľké lesnaté pohorie |
+  | Biele Karpaty | cvrček, čmeliak | kvetnaté lúky; cvrček poľný žije na suchých slnečných lúkach a medziach |
+  | Vysoké Tatry | – | orientačný bod |
+  | Svet: Amerika / more / Austrália | aligátor / delfín / emu | aligátor severoamerický, delfíny v moriach, emu v Austrálii |
+
+  Orientačne sú vyznačené aj Bratislava a Košice. Mapu pregeneruje skript `scripts/map-build.ts` (návod je v ňom).
+  Na mobile na výšku je mapa menšia, lepšie sa na nej hrá na šírku alebo na tablete.
   Tatry sú zatiaľ prázdne (žiadne zvieratko A–E tam nepatrí).
 - **Písmo:** Baloo 2 je uložené lokálne v aplikácii (iba latinka a latinka s diakritikou). Aplikácia nerobí žiadne požiadavky na cudzie servery.
 - **QR kódy v aplikácii** sa generujú priamo v prehliadači (knižnica `qrcode`), bez internetu.

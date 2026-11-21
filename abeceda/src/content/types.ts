@@ -38,6 +38,8 @@ export interface Animal {
   /** zaujímavosť (číta hlas) */
   fact: string;
   mapPlace: MapPlaceId;
+  /** pri zvieratkách zo „Sveta“: odkiaľ pochádza (malý popis na mape) */
+  worldPlace?: string;
   /** cesta k zvuku zvieraťa (napr. "audio/zvuky/bobor.mp3"); null = variant „Kto takto robí?“ sa preskočí */
   soundPath: string | null;
   /** písmeno, ktoré sa v názve zvýrazní (napr. "ä" v slove žriebä); predvolene prvé písmeno */

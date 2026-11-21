@@ -224,10 +224,14 @@ img { user-select: none; -webkit-user-drag: none; }
 /* ---------- mapa ---------- */
 .map-title { font-size: 44px; }
 .map-layout { flex: 1; display: flex; gap: 16px; align-items: center; justify-content: center; min-height: 0; }
-.sk-map { position: relative; width: min(100%, 900px, calc((100dvh - 140px) * 400 / 210)); aspect-ratio: 400 / 210; }
+.sk-map { container-type: inline-size; position: relative; width: min(100%, 900px, calc((100dvh - 140px) * 400 / 210)); aspect-ratio: 400 / 210; }
 .sk-map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.sk-land { fill: #eef8e6; stroke: var(--green); stroke-width: 2.5; stroke-linejoin: round; }
-.sk-river { fill: none; stroke: #8cc8ec; stroke-width: 6; stroke-linecap: round; }
+.sk-land { fill: #eef8e6; stroke: var(--green); stroke-width: 2; stroke-linejoin: round; }
+.sk-river { fill: none; stroke: #8cc8ec; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.sk-river.thin { stroke-width: 2.5; }
+.sk-city circle { fill: #fff; stroke: #7a8a74; stroke-width: 1.2; }
+.sk-city text, .sk-label { font-size: 7px; fill: #7a8a74; font-weight: 600; pointer-events: none; }
+.sk-label { fill: #5c7a50; }
 .sk-mountains path { fill: #b9a99a; }
 .sk-mountains .snow { fill: #fff; }
 .sk-forest path { fill: #5fae4a; }
@@ -235,13 +239,16 @@ img { user-select: none; -webkit-user-drag: none; }
 .sk-meadow circle { fill: #ffd6e7; stroke: #f4a4c6; stroke-width: 1; }
 .sk-village .wall { fill: #fff3d6; stroke: #d9b98f; }
 .sk-village .roof { fill: #e58b6b; }
-.map-token { position: absolute; transform: translate(-50%, -50%); border: none; background: none; padding: 0; width: clamp(56px, 9vw, 84px); height: clamp(56px, 9vw, 84px); }
+.map-token { position: absolute; transform: translate(-50%, -50%); border: none; background: none; padding: 0; width: clamp(44px, 8cqw, 80px); height: clamp(44px, 8cqw, 80px); }
+.world .map-token { width: clamp(56px, 8vw, 80px); height: clamp(56px, 8vw, 80px); }
 .world .map-token { position: static; transform: none; }
 .map-token .animal-pic { width: 100%; height: 100%; border: 3px solid #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12); }
 .map-token.here .animal-pic { animation: popIn 0.6s both; }
 .map-token.empty .animal-pic { border-style: dashed; border-color: #ccc; box-shadow: none; }
 .world { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 12px; border-radius: var(--radius); background: var(--pastel-blue); }
 .globe { font-size: 44px; }
+.world-slot { display: flex; flex-direction: column; align-items: center; }
+.world-label { font-size: 0.8rem; color: #4a6a80; font-weight: 600; }
 .world-slots { display: flex; flex-direction: column; gap: 10px; }
 @media (orientation: portrait) {
   .map-layout { flex-direction: column; }

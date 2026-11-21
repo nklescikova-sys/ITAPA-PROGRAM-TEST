@@ -1,16 +1,53 @@
 import type { MapPlaceId } from './types';
+import { project } from './map-projection';
 
-/** Miesta na zjednodušenej mape Slovenska (súradnice vo viewBoxe 0 0 400 210). */
-export const MAP_PLACES: Record<Exclude<MapPlaceId, 'svet'>, { name: string; x: number; y: number }> = {
-  dunaj: { name: 'Dunaj pri Bratislave', x: 62, y: 172 },
-  dedina: { name: 'Dedina', x: 112, y: 120 },
-  les: { name: 'Les', x: 180, y: 95 },
-  tatry: { name: 'Tatry', x: 250, y: 52 },
-  luka: { name: 'Lúka', x: 318, y: 112 },
+export { SLOVAKIA_OUTLINE, RIVER_DANUBE, RIVER_MORAVA } from './map-geo';
+
+/**
+ * Miesta na mape Slovenska. Súradnice sú skutočné (zemepisná dĺžka a šírka),
+ * na mapu sa prepočítajú automaticky. Nové miesto pridáte doplnením riadku
+ * a jeho id do typu MapPlaceId v types.ts.
+ */
+export const MAP_PLACES: Record<Exclude<MapPlaceId, 'svet'>, { name: string; lon: number; lat: number; why: string }> = {
+  dunaj: {
+    name: 'Dunajské luhy',
+    lon: 17.62,
+    lat: 47.9,
+    why: 'Bobry žijú v lužných lesoch pri Dunaji (od Bratislavy po Gabčíkovo) a pri Morave, kam sa koncom 70. rokov vrátili.',
+  },
+  dedina: {
+    name: 'Topoľčianky',
+    lon: 18.41,
+    lat: 48.42,
+    why: 'Národný žrebčín Topoľčianky – jeden z najväčších chovov koní v Európe, každý rok sa tu rodia žriebätá.',
+  },
+  les: {
+    name: 'Poľana',
+    lon: 19.47,
+    lat: 48.64,
+    why: 'Ďateľ veľký žije vo všetkých druhoch lesov; Poľana je veľké lesnaté pohorie v strede Slovenska.',
+  },
+  luka: {
+    name: 'Biele Karpaty',
+    lon: 17.85,
+    lat: 48.93,
+    why: 'Kvetnaté lúky Bielych Karpát – cvrček poľný žije na suchých slnečných lúkach a medziach, čmeliaky na kvitnúcich lúkach.',
+  },
+  tatry: {
+    name: 'Vysoké Tatry',
+    lon: 20.13,
+    lat: 49.16,
+    why: 'Najvyššie hory Slovenska.',
+  },
 };
 
-/** Zjednodušený, kreslený obrys Slovenska (nie presná geografia). */
-export const SLOVAKIA_OUTLINE =
-  'M28 160 C18 140 22 115 42 98 C60 82 85 68 112 58 C140 48 160 40 180 26 C196 16 212 28 226 30 C244 22 262 22 280 30 C300 36 322 36 344 42 C364 46 384 50 394 62 C400 80 396 100 388 118 C380 134 360 140 342 138 C322 136 300 140 284 150 C262 160 238 160 214 164 C190 168 166 172 144 182 C122 192 96 194 74 188 C54 182 36 176 28 160 Z';
+export function placeXY(id: Exclude<MapPlaceId, 'svet'>): [number, number] {
+  const p = MAP_PLACES[id];
+  return project(p.lon, p.lat);
+}
 
-export const DANUBE = 'M24 158 C40 172 58 182 80 190 C104 198 128 194 150 186';
+/** Orientačné body bez zvieratka (len pre lepšiu predstavu). */
+export const CITIES = [
+  { name: 'Bratislava', lon: 17.107, lat: 48.148 },
+  { name: 'Košice', lon: 21.26, lat: 48.72 },
+];

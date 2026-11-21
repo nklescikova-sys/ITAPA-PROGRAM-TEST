@@ -1,13 +1,17 @@
 import { useEffect } from 'react';
 import type { Animal } from '../content/types';
 import { LETTERS } from '../content/letters';
-import { DANUBE, MAP_PLACES, SLOVAKIA_OUTLINE } from '../content/map';
+import { CITIES, MAP_PLACES, RIVER_DANUBE, RIVER_MORAVA, SLOVAKIA_OUTLINE, placeXY } from '../content/map';
+import { project } from '../content/map-projection';
 import { PHRASES, sayName, sayNameEn } from '../content/phrases';
 import { speak, stopSpeaking } from '../lib/speech';
 import { navigate } from '../lib/router';
 import { useStore } from '../lib/store';
 import { AnimalPic, RoundButton } from '../components/ui';
 import { IconHome } from '../components/icons';
+
+/** posun popisu miesta pod ikonu (aby ho nezakrylo zvieratko) */
+const LABEL_DY = { tatry: -14, les: 40, dedina: 41, luka: 35, dunaj: 25 } as const;
 
 interface Slot {
   animal: Animal;
@@ -58,49 +62,75 @@ export function MapScreen() {
         <div className="sk-map">
           <svg viewBox="0 0 400 210" aria-label="Mapa Slovenska">
             <path d={SLOVAKIA_OUTLINE} className="sk-land" />
-            <path d={DANUBE} className="sk-river" />
+            <path d={RIVER_DANUBE} className="sk-river" />
+            <path d={RIVER_MORAVA} className="sk-river thin" />
+            {CITIES.map((c) => {
+              const [x, y] = project(c.lon, c.lat);
+              return (
+                <g key={c.name} className="sk-city">
+                  <circle cx={x} cy={y} r={2.6} />
+                  <text x={x + 5} y={y + 1} dominantBaseline="middle">{c.name}</text>
+                </g>
+              );
+            })}
             {/* Tatry */}
-            <g className="sk-mountains" transform="translate(228 56)">
+            <g className="sk-mountains" transform={`translate(${placeXY('tatry')[0] - 25} ${placeXY('tatry')[1] - 8})`}>
               <path d="M0 18 L14 0 L28 18 Z" />
               <path d="M18 18 L34 -6 L50 18 Z" />
               <path d="M30 4 L34 -6 L38 4 Z" className="snow" />
             </g>
-            {/* les */}
-            <g className="sk-forest" transform="translate(160 110)">
+            {/* les – Poľana */}
+            <g className="sk-forest" transform={`translate(${placeXY('les')[0] - 14} ${placeXY('les')[1] + 16})`}>
               {[0, 14, 28].map((x) => (
-                <g key={x} transform={`translate(${x} ${x === 14 ? -6 : 0})`}>
-                  <rect x="-1.5" y="8" width="3" height="6" className="trunk" />
+                <g key={x} transform={`translate(${x} ${x === 14 ? -5 : 0})`}>
+                  <rect x="-1.5" y="8" width="3" height="5" className="trunk" />
                   <path d="M-7 9 L0 -6 L7 9 Z" />
                 </g>
               ))}
             </g>
-            {/* lúka */}
-            <g className="sk-meadow" transform="translate(300 132)">
-              {[0, 12, 24, 36].map((x) => (
-                <circle key={x} cx={x} cy={(x / 12) % 2 ? 4 : 0} r="3" />
+            {/* lúka – Biele Karpaty */}
+            <g className="sk-meadow" transform={`translate(${placeXY('luka')[0] - 22} ${placeXY('luka')[1] + 22})`}>
+              {[0, 11, 22, 33, 44].map((x) => (
+                <circle key={x} cx={x} cy={(x / 11) % 2 ? 4 : 0} r="2.6" />
               ))}
             </g>
-            {/* dedina */}
-            <g className="sk-village" transform="translate(96 136)">
-              {[0, 18].map((x) => (
+            {/* dedina – Topoľčianky */}
+            <g className="sk-village" transform={`translate(${placeXY('dedina')[0] - 14} ${placeXY('dedina')[1] + 18})`}>
+              {[0, 16].map((x) => (
                 <g key={x} transform={`translate(${x} 0)`}>
-                  <rect x="0" y="6" width="12" height="9" className="wall" />
-                  <path d="M-2 7 L6 -1 L14 7 Z" className="roof" />
+                  <rect x="0" y="6" width="11" height="8" className="wall" />
+                  <path d="M-2 7 L5.5 -1 L13 7 Z" className="roof" />
                 </g>
               ))}
             </g>
+            {/* názvy miest (pre rodiča) */}
+            {(Object.keys(MAP_PLACES) as (keyof typeof MAP_PLACES)[]).map((id) => {
+              const [x, y] = placeXY(id);
+              return (
+                <text key={id} className="sk-label" x={x} y={y + LABEL_DY[id]} textAnchor="middle">
+                  {MAP_PLACES[id].name}
+                </text>
+              );
+            })}
           </svg>
           {local.map((s) => {
-            const place = MAP_PLACES[s.animal.mapPlace as keyof typeof MAP_PLACES];
+            const [px, py] = placeXY(s.animal.mapPlace as keyof typeof MAP_PLACES);
             const same = local.filter((o) => o.animal.mapPlace === s.animal.mapPlace);
             const idx = same.indexOf(s);
-            const dx = (idx - (same.length - 1) / 2) * 34;
-            return token(s, { left: `${((place.x + dx) / 400) * 100}%`, top: `${(place.y / 210) * 100}%` });
+            const dx = (idx - (same.length - 1) / 2) * 30;
+            return token(s, { left: `${((px + dx) / 400) * 100}%`, top: `${(py / 210) * 100}%` });
           })}
         </div>
         <div className="world">
           <span className="globe" aria-label="Svet">🌍</span>
-          <div className="world-slots">{world.map((s) => token(s))}</div>
+          <div className="world-slots">
+            {world.map((s) => (
+              <div className="world-slot" key={s.animal.id}>
+                {token(s)}
+                {s.animal.worldPlace && <span className="world-label">{s.animal.worldPlace}</span>}
+              </div>
+            ))}
+          </div>
         </div>
       </main>
     </div>

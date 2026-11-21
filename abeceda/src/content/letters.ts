@@ -21,6 +21,7 @@ export const LETTERS: LetterContent[] = [
       color: '#DDF0D0',
       fact: 'Aligátor má v papuli asi osemdesiat zubov. Keď mu nejaký vypadne, narastie mu nový.',
       mapPlace: 'svet',
+      worldPlace: 'Amerika',
       soundPath: null,
     },
     extra: {
@@ -106,6 +107,7 @@ export const LETTERS: LetterContent[] = [
       color: '#D6ECF7',
       fact: 'Keď delfín spí, odpočíva mu len polovica mozgu. Druhá polovica dáva pozor.',
       mapPlace: 'svet',
+      worldPlace: 'more',
       soundPath: null,
     },
     extra: {
@@ -139,6 +141,7 @@ export const LETTERS: LetterContent[] = [
       color: '#EDE3F3',
       fact: 'Emu nevie lietať, ale veľmi rýchlo behá. Na vajíčkach sedí ocko emu.',
       mapPlace: 'svet',
+      worldPlace: 'Austrália',
       soundPath: null,
     },
     parentTip:

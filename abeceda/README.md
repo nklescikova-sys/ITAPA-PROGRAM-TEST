@@ -404,9 +404,12 @@ Testy v `tests/tracing.test.ts` overujú:
 - **Po anglicky – mini hra:** zaznie anglické slovo aktuálneho zvieratka a dieťa vyberie z 3 obrázkov.
   Ťuknutím na obrázok zaznie jeho anglický názov.
 - **Knižka nálepiek** (`#/nalepky`, žlté tlačidlo s knižkou na domovskej obrazovke, na mape a na konci písmena):
-  každé písmeno má jednu stranu, dokončené zvieratko je nálepka, doplnkové zvieratko (Ä, Č, Ď) má menšie
-  miesto. Ťuknutím na nálepku zaznie názov po slovensky aj po anglicky. Na tablete na šírku je knižka otvorená (2 strany),
-  na mobile na výšku po jednej strane. Na konci písmena sa dá ťuknúť na mapu aj na knižku.
+  obsah je v `src/content/stickers.ts`, oddelený od zvieratiek. Strany majú tému (lúka, more, slniečko…)
+  a pevný počet miest (`capacity`, zatiaľ 12). Voľné miesta sú pripravené na ďalší obsah. Nálepky zvieratiek
+  sa tvoria automaticky z `letters.ts` (Slovensko / Svet podľa miesta na mape). Iné nálepky (farby, čísla,
+  ovocie…) sa pridajú do `OTHER_STICKERS` s obrázkom, názvom SK/EN a podmienkou `unlock`. Nová strana = nový
+  riadok v `STICKER_PAGES`. Nové nálepky od poslednej návštevy sa „nalepia“ s animáciou a iskričkou ✨.
+  Ťuknutím na nálepku zaznie názov po slovensky aj po anglicky. Na tablete na šírku sú 2 strany, na mobile 1.
 - **Tlačidlo „Ďalej“** v hrách (Počúvam, Po anglicky) sa zapne až po správnej odpovedi. V ostatných krokoch je aktívne hneď.
 - **Nastavenia** (presnosť, ľaváci, hlasitosť, zvuky) sú spoločné pre celé zariadenie, nie pre každý profil.
 - **Ochrana rodičovskej časti:** podržanie 3 s a príklad na sčítanie (súčet do 18) s výberom z 3 možností.

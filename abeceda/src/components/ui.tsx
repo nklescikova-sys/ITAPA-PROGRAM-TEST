@@ -34,7 +34,8 @@ export function RoundButton({ onClick, label, children, variant = 'soft', size =
 }
 
 /** Obrázok zvieratka; ak sa nenačíta, ukáže emoji. */
-export function AnimalPic({ animal, className = '', silhouette = false }: { animal: Animal; className?: string; silhouette?: boolean }) {
+type PicSource = Pick<Animal, 'name' | 'image' | 'emoji' | 'color'>;
+export function AnimalPic({ animal, className = '', silhouette = false }: { animal: PicSource; className?: string; silhouette?: boolean }) {
   const [failed, setFailed] = useState(false);
   return (
     <div className={`animal-pic ${silhouette ? 'silhouette' : ''} ${className}`} style={{ background: silhouette ? '#eee' : animal.color }}>

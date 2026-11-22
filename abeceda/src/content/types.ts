@@ -72,6 +72,8 @@ export interface Profile {
   avatar: string;
   progress: Record<string, LetterProgress>;
   lastPlayed?: string;
+  /** nálepky, ktoré dieťa už videlo v knižke (nové sa zvýraznia) */
+  seenStickers?: string[];
 }
 
 export interface LetterProgress {

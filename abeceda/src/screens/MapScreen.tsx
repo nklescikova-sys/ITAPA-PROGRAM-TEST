@@ -8,7 +8,7 @@ import { speak, stopSpeaking } from '../lib/speech';
 import { navigate } from '../lib/router';
 import { useStore } from '../lib/store';
 import { AnimalPic, RoundButton } from '../components/ui';
-import { IconHome } from '../components/icons';
+import { IconBook, IconHome } from '../components/icons';
 
 /** posun popisu miesta pod ikonu (aby ho nezakrylo zvieratko) */
 const LABEL_DY = { tatry: -14, les: 40, dedina: 41, luka: 35, dunaj: 25 } as const;
@@ -56,7 +56,9 @@ export function MapScreen() {
           <IconHome />
         </RoundButton>
         <span className="map-title" aria-hidden>🗺️</span>
-        <span className="spacer" />
+        <RoundButton label="Knižka nálepiek" variant="sun" onClick={() => navigate('/nalepky')}>
+          <IconBook />
+        </RoundButton>
       </header>
       <main className="map-layout">
         <div className="sk-map">

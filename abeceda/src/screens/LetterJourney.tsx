@@ -21,7 +21,7 @@ import { useStore } from '../lib/store';
 import { MAX_FAILS, toleranceFor } from '../lib/tracing';
 import { TracingBoard } from '../components/TracingBoard';
 import { AnimalName, AnimalPic, ProgressDots, RoundButton } from '../components/ui';
-import { IconCheck, IconHand, IconHome, IconMap, IconNext, IconSkip, IconSpeaker } from '../components/icons';
+import { IconCheck, IconHand, IconHome, IconNext, IconSkip, IconSpeaker } from '../components/icons';
 
 type Prompt = () => void;
 interface StepProps {
@@ -406,7 +406,7 @@ function Finale({ letter, setPrompt }: StepProps) {
   useEffect(() => {
     updateProgress(letter.id, (p) => ({ ...p, completed: true, completedAt: p.completedAt ?? new Date().toISOString() }));
     chime();
-    setPrompt(() => speak(sayMoved(letter.animal)));
+    setPrompt(() => speak(sayMoved(letter.animal), PHRASES.stickerAdded));
   }, []); // eslint-disable-line
   return (
     <>
@@ -414,14 +414,19 @@ function Finale({ letter, setPrompt }: StepProps) {
         <div className="fly-away">
           <AnimalPic animal={letter.animal} className="big" />
         </div>
-        <div className="finale-map" aria-hidden>
-          🗺️
+        <div className="finale-targets">
+          <button type="button" className="finale-target" aria-label="Mapa" onClick={() => navigate('/mapa')}>
+            <span aria-hidden>🗺️</span>
+          </button>
+          <button type="button" className="finale-target book" aria-label="Knižka nálepiek" onClick={() => navigate('/nalepky')}>
+            <span aria-hidden>📒</span>
+            <span className="finale-sticker" aria-hidden>
+              <AnimalPic animal={letter.animal} />
+            </span>
+          </button>
         </div>
       </main>
       <aside className="controls">
-        <RoundButton label="Mapa" variant="primary" size="xl" pulse onClick={() => navigate('/mapa')}>
-          <IconMap />
-        </RoundButton>
         <RoundButton label="Domov" size="xl" onClick={() => navigate('/')}>
           <IconHome />
         </RoundButton>

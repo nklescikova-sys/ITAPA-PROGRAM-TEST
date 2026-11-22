@@ -192,6 +192,8 @@ Zvuky zvierat (variant hry „Kto takto robí?“): uložte napr. `public/audio/
 | `public/audio/sk/kto-takto-robi.mp3` | Kto takto robí? |
 | `public/audio/sk/tukni-na-obrazok.mp3` | Ťukni na obrázok: |
 | `public/audio/sk/povedz-to-aj-ty.mp3` | Povedz to aj ty: |
+| `public/audio/sk/nalepka-v-knizke.mp3` | A nálepku máš v knižke! |
+| `public/audio/sk/knizka-nalepiek.mp3` | Toto je tvoja knižka nálepiek. Ťukni na nálepku. |
 | `public/audio/sk/aligator-uvod.mp3` | A ako aligátor. |
 | `public/audio/sk/obtiahni-velke-a.mp3` | Obtiahni veľké písmeno A. |
 | `public/audio/sk/obtiahni-male-a.mp3` | Teraz malé písmeno a. |
@@ -401,6 +403,10 @@ Testy v `tests/tracing.test.ts` overujú:
   Variant „Kto takto robí?“ je pripravený a zapne sa automaticky, keď zvieratko dostane `soundPath`.
 - **Po anglicky – mini hra:** zaznie anglické slovo aktuálneho zvieratka a dieťa vyberie z 3 obrázkov.
   Ťuknutím na obrázok zaznie jeho anglický názov.
+- **Knižka nálepiek** (`#/nalepky`, žlté tlačidlo s knižkou na domovskej obrazovke, na mape a na konci písmena):
+  každé písmeno má jednu stranu, dokončené zvieratko je nálepka, doplnkové zvieratko (Ä, Č, Ď) má menšie
+  miesto. Ťuknutím na nálepku zaznie názov po slovensky aj po anglicky. Na tablete na šírku je knižka otvorená (2 strany),
+  na mobile na výšku po jednej strane. Na konci písmena sa dá ťuknúť na mapu aj na knižku.
 - **Tlačidlo „Ďalej“** v hrách (Počúvam, Po anglicky) sa zapne až po správnej odpovedi. V ostatných krokoch je aktívne hneď.
 - **Nastavenia** (presnosť, ľaváci, hlasitosť, zvuky) sú spoločné pre celé zariadenie, nie pre každý profil.
 - **Ochrana rodičovskej časti:** podržanie 3 s a príklad na sčítanie (súčet do 18) s výberom z 3 možností.

@@ -5,7 +5,7 @@ import { speak } from '../lib/speech';
 import { navigate } from '../lib/router';
 import { useStore } from '../lib/store';
 import { AnimalPic, RoundButton } from '../components/ui';
-import { IconMap, IconStar, IconSwap } from '../components/icons';
+import { IconBook, IconMap, IconStar, IconSwap } from '../components/icons';
 import { ParentGate } from '../components/ParentGate';
 
 export function Home() {
@@ -59,6 +59,9 @@ export function Home() {
       <footer className="home-bottom">
         <RoundButton label="Mapa" variant="primary" size="xl" onClick={() => navigate('/mapa')}>
           <IconMap />
+        </RoundButton>
+        <RoundButton label="Knižka nálepiek" variant="sun" size="xl" onClick={() => navigate('/nalepky')}>
+          <IconBook />
         </RoundButton>
       </footer>
     </div>

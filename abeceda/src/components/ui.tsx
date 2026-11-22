@@ -9,7 +9,7 @@ interface RoundButtonProps {
   onClick: () => void;
   label: string; // pre čítačky obrazovky a rodiča (dieťa nemusí čítať)
   children: ReactNode;
-  variant?: 'primary' | 'soft' | 'ghost';
+  variant?: 'primary' | 'soft' | 'ghost' | 'sun';
   size?: 'l' | 'xl';
   pulse?: boolean;
   disabled?: boolean;
@@ -88,7 +88,7 @@ export function SpeechBubble() {
   }, []);
   if (!text) return null;
   return (
-    <div className="bubble" role="status" onClick={() => setText(null)}>
+    <div className="bubble" role="status">
       <span className="bubble-icon" aria-hidden>💬</span> {text}
     </div>
   );

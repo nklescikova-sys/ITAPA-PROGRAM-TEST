@@ -5,6 +5,7 @@ import { useStore } from './lib/store';
 import { Home } from './screens/Home';
 import { LetterJourney } from './screens/LetterJourney';
 import { MapScreen } from './screens/MapScreen';
+import { StickerBook } from './screens/StickerBook';
 import { Parents } from './screens/Parents';
 import { ProfilePicker } from './screens/ProfilePicker';
 import { SpeechBubble } from './components/ui';
@@ -25,6 +26,7 @@ export function App() {
     const letter = m ? findLetter(decodeURIComponent(m[1])) : undefined;
     if (letter) screen = <LetterJourney key={letter.id} letter={letter} />;
     else if (path === '/mapa') screen = <MapScreen />;
+    else if (path === '/nalepky') screen = <StickerBook />;
     else {
       if (path !== '/') navigate('/');
       screen = <Home />;

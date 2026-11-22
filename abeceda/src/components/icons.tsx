@@ -19,6 +19,9 @@ export const IconPlay = () => (
 export const IconMap = () => (
   <svg viewBox="0 0 24 24" {...P}><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z" /><path d="M9 4v14M15 6v14" /></svg>
 );
+export const IconBook = () => (
+  <svg viewBox="0 0 24 24" {...P}><path d="M12 6.5C10 5 7 4.5 3.5 5v13.5C7 18 10 18.5 12 20c2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z" /><path d="M12 6.5V20" /></svg>
+);
 export const IconHand = () => (
   <svg viewBox="0 0 24 24" {...P}><path d="M9 11V5a1.5 1.5 0 013 0v5" /><path d="M12 10V4a1.5 1.5 0 013 0v6" /><path d="M15 10V6a1.5 1.5 0 013 0v7c0 4-2.5 7-6.5 7-2.5 0-4-1-5.5-3l-2.7-4a1.6 1.6 0 012.5-2L9 14" /></svg>
 );

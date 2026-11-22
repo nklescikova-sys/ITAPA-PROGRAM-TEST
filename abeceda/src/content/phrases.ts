@@ -17,6 +17,8 @@ export const PHRASES = {
   whoMakesSound: { text: 'Kto takto robí?', audio: 'audio/sk/kto-takto-robi.mp3' },
   tapPicture: { text: 'Ťukni na obrázok:', audio: 'audio/sk/tukni-na-obrazok.mp3' },
   sayItToo: { text: 'Povedz to aj ty:', audio: 'audio/sk/povedz-to-aj-ty.mp3' },
+  stickerAdded: { text: 'A nálepku máš v knižke!', audio: 'audio/sk/nalepka-v-knizke.mp3' },
+  stickerBook: { text: 'Toto je tvoja knižka nálepiek. Ťukni na nálepku.', audio: 'audio/sk/knizka-nalepiek.mp3' },
 } satisfies Record<string, Say>;
 
 export const sayName = (a: Animal): Say => ({ text: a.name, audio: `audio/sk/${a.id}.mp3` });

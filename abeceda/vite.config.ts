@@ -10,8 +10,18 @@ export default defineConfig(({ mode, command, isPreview }) => {
   if ((command === 'build' || isPreview) && env.VITE_BASE_URL) {
     base = new URL(env.VITE_BASE_URL).pathname;
   }
+  // režim "artifact": náhľad na claude.ai – jeden súbor JS/CSS, písma vložené priamo
+  const artifact = mode === 'artifact';
+  if (artifact) base = './';
   return {
     base,
+    build: artifact
+      ? {
+          outDir: 'dist-artifact',
+          assetsInlineLimit: 10_000_000,
+          rollupOptions: { output: { inlineDynamicImports: true } },
+        }
+      : undefined,
     plugins: [
       react(),
       VitePWA({

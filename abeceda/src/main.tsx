@@ -12,7 +12,8 @@ import { App } from './App';
 import { StoreProvider } from './lib/store';
 import { registerSW } from 'virtual:pwa-register';
 
-registerSW({ immediate: true });
+// v prostredí bez service workera (napr. náhľad) sa registrácia ticho preskočí
+registerSW({ immediate: true, onRegisterError: () => {} });
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

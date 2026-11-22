@@ -2,3 +2,4 @@ node_modules
 dist
 *.local
 geo/
+dist-artifact

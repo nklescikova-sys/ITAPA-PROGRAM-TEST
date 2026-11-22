@@ -56,6 +56,7 @@ a offline režim fungujú až na adrese s `https://` (po nasadení, pozri nižš
 | `npm run qr` | vygeneruje QR kódy do priečinka `qr/` |
 | `npm run nahravky` | vypíše zoznam viet na nahranie |
 | `npm run obrazky` | znova vygeneruje zástupné obrázky zvieratiek |
+| `npx vite build --mode artifact && npx tsx scripts/artifact-page.ts` | pripraví náhľad do jedného súboru (`dist-artifact/page.html`) pre claude.ai |
 
 ## 2. Nasadenie na internet
 

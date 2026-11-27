@@ -16,6 +16,17 @@ function bubble(text: string | null) {
   listeners.forEach((fn) => fn(text));
 }
 
+/** Či práve niečo hovorí (sovička vtedy „rozpráva“). */
+type SpeakingListener = (speaking: boolean) => void;
+const speakingListeners = new Set<SpeakingListener>();
+export function onSpeaking(fn: SpeakingListener) {
+  speakingListeners.add(fn);
+  return () => speakingListeners.delete(fn);
+}
+function setSpeaking(v: boolean) {
+  speakingListeners.forEach((fn) => fn(v));
+}
+
 let volume = 1;
 export function setVolume(v: number) {
   volume = Math.max(0, Math.min(1, v));
@@ -70,6 +81,7 @@ let token = 0;
 export function stopSpeaking() {
   token++;
   bubble(null);
+  setSpeaking(false);
   try {
     synth?.cancel();
   } catch {
@@ -148,6 +160,15 @@ export async function speak(...items: Say[]): Promise<void> {
   stopSpeaking();
   const my = token;
   bubble(null);
+  setSpeaking(true);
+  try {
+    await speakAll(items, my);
+  } finally {
+    if (my === token) setSpeaking(false);
+  }
+}
+
+async function speakAll(items: Say[], my: number) {
   for (const item of items) {
     if (my !== token) return;
     const lang = item.lang ?? 'sk';

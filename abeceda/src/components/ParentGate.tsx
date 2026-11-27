@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { navigate } from '../lib/router';
 import { useStore } from '../lib/store';
 import { IconParents } from './icons';
@@ -48,7 +49,8 @@ export function ParentGate() {
         </svg>
         <IconParents />
       </button>
-      {quiz && (
+      {quiz &&
+        createPortal(
         <div className="modal-backdrop" onClick={() => setQuiz(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Overenie pre rodičov">
             <p className="modal-title">Pre rodičov</p>
@@ -77,8 +79,9 @@ export function ParentGate() {
               Zrušiť
             </button>
           </div>
-        </div>
-      )}
+        </div>,
+          document.body,
+        )}
     </>
   );
 }

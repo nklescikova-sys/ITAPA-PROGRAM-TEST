@@ -21,6 +21,7 @@ QR kód, ktorý otvorí dané písmeno priamo v aplikácii.
 8. [Štruktúra projektu a dátový model](#8-štruktúra-projektu-a-dátový-model)
 9. [Testy](#9-testy)
 10. [Rozhodnutia a predpoklady](#10-rozhodnutia-a-predpoklady)
+11. [Inšpirácia z konkurencie](#11-inšpirácia-z-konkurencie-čo-sme-prevzali-a-čomu-sa-vyhýbame)
 
 ---
 
@@ -192,6 +193,7 @@ Zvuky zvierat (variant hry „Kto takto robí?“): uložte napr. `public/audio/
 | `public/audio/sk/kto-takto-robi.mp3` | Kto takto robí? |
 | `public/audio/sk/tukni-na-obrazok.mp3` | Ťukni na obrázok: |
 | `public/audio/sk/povedz-to-aj-ty.mp3` | Povedz to aj ty: |
+| `public/audio/sk/oddych.mp3` | Dobrá práca! Teraz si môžeš oddýchnuť, alebo si vyber ďalšie písmenko. |
 | `public/audio/sk/nalepka-v-knizke.mp3` | A nálepku máš v knižke! |
 | `public/audio/sk/knizka-nalepiek.mp3` | Toto je tvoja knižka nálepiek. Ťukni na nálepku. |
 | `public/audio/sk/aligator-uvod.mp3` | A ako aligátor. |
@@ -380,6 +382,35 @@ Testy v `tests/tracing.test.ts` overujú:
 - **vybočenie** ťah nezruší a po návrate sa dá pokračovať; úsek mimo zóny sa nezapočíta,
 - **tolerancia**: čiara posunutá o 6 jednotiek prejde na Ľahkej, na Ťažkej nie,
 - počítanie neúspechov po sebe (pre automatickú ukážku) a bodky pri Ä.
+
+## 11. Inšpirácia z konkurencie (čo sme prevzali a čomu sa vyhýbame)
+
+Podľa recenzií rodičov a odborníkov (Common Sense Media, App Store, prehľady sťažností rodičov) na aplikácie
+LetterSchool, Writing Wizard, Khan Academy Kids, ABCmouse a ďalšie:
+
+| Čo ľudia chvália | Ako je to u nás |
+| --- | --- |
+| Priateľský sprievodca – zvieratko (Khan Academy Kids) | sovička, ktorá „rozpráva“, keď hovorí hlas, a poteší sa pri úspechu |
+| Postup: ťukni na začiatok → obťahuj → napíš bez pomôcok (LetterSchool) | zelená začiatočná bodka, 3 opakovania, pri treťom bez šípok a čísel |
+| Ukážka prstom a jasné hlasové pokyny (Writing Wizard) | tlačidlo „Ukáž mi“ s rukou, pokyn v každom kroku, tlačidlo „Zopakuj“ |
+| Motivujúce odmeny | hviezdičky za opakovanie, nálepky do knižky, zvieratko na mapu |
+| Možnosť voľby pre dieťa | dieťa si vyberá písmeno aj farbu pastelky |
+| Bez reklám, offline, súkromie | žiadne reklamy, nákupy ani sledovanie, funguje offline, dáta len v zariadení |
+| Nastavenie náročnosti pre rodiča | Ľahká / Stredná / Ťažká, ľaváci |
+
+| Na čo sa sťažujú | Ako sa tomu vyhýbame |
+| --- | --- |
+| Reklamy, predplatné, nákupy v aplikácii, „upsell“ v detskej časti | nič také v aplikácii nie je |
+| Precitlivené obťahovanie („ťah sa nespojí“) | široká tolerancia na Ľahkej, po 3 neúspechoch sa automaticky zväčší a prehrá ukážka |
+| Prehnané animácie a zvuky, preťaženie zmyslov | pokojné farby, nič nebliká ani sa neopakuje dokola, jemné jednorazové animácie a tiché tóny |
+| Žiadny prirodzený koniec, dieťa hrá donekonečna | po každom písmene sovička povie „Dobrá práca! Teraz si môžeš oddýchnuť…“ |
+| Príliš zložité nastavenia | len 4 nastavenia, skryté v časti pre rodičov |
+
+**Vizuálny systém:** kreslené pozadie (obloha, slniečko, kopce), každé písmeno má vlastnú farbu
+(`colors` v `letters.ts`) – rovnakou farbou je karta na domovskej obrazovke, pozadie cesty písmena aj cestička
+krokov, takže dieťa vždy vie, kde je. Cestička 5 krokov má obrázky (ruka, ceruzka, ucho, žiarovka, bublina).
+Tlačidlá sú veľké a „hmotné“ (s tieňom ako hračka); domček je vždy vľavo hore, reproduktor vpravo hore,
+zelená šípka „Ďalej“ vpravo (u ľavákov vľavo).
 
 ## 10. Rozhodnutia a predpoklady
 

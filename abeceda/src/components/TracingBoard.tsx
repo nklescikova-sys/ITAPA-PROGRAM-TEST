@@ -13,6 +13,8 @@ interface Props {
   demoKey: number;
   onDemoEnd?: () => void;
   onEvent: (ev: TraceEvent, tracer: LetterTracer) => void;
+  /** farba pastelky, ktorou sa vyfarbujú ťahy */
+  inkColor?: string;
   /** ukáže zónu tolerancie (pre rodiča / ladenie) */
   showZone?: boolean;
 }
@@ -40,7 +42,7 @@ function partial(pts: Pt[], frac: number): Pt[] {
   return pts.slice(0, n + 1);
 }
 
-export function TracingBoard({ glyph, tolerance, showHints, leftHanded, demoKey, onDemoEnd, onEvent, showZone }: Props) {
+export function TracingBoard({ glyph, tolerance, showHints, leftHanded, demoKey, onDemoEnd, onEvent, showZone, inkColor }: Props) {
   const svgRef = useRef<SVGSVGElement>(null);
   const tracerRef = useRef<LetterTracer | null>(null);
   if (!tracerRef.current) tracerRef.current = new LetterTracer(glyph.strokes, tolerance);
@@ -188,6 +190,7 @@ export function TracingBoard({ glyph, tolerance, showHints, leftHanded, demoKey,
     <svg
       ref={svgRef}
       className={`board ${done ? 'board-done' : ''}`}
+      style={inkColor ? ({ '--pen': inkColor } as React.CSSProperties) : undefined}
       viewBox={`${-PAD} 0 ${vbW} ${GEOMETRY.height}`}
       preserveAspectRatio="xMidYMid meet"
       onPointerDown={down}

@@ -1,4 +1,5 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
+import { IconBulb, IconChat, IconCheck, IconEar, IconPencil, IconWave } from './icons';
 import type { Animal } from '../content/types';
 import { onBubble } from '../lib/speech';
 import { unlockAudio } from '../lib/sfx';
@@ -9,7 +10,7 @@ interface RoundButtonProps {
   onClick: () => void;
   label: string; // pre čítačky obrazovky a rodiča (dieťa nemusí čítať)
   children: ReactNode;
-  variant?: 'primary' | 'soft' | 'ghost' | 'sun';
+  variant?: 'primary' | 'soft' | 'ghost' | 'sun' | 'home';
   size?: 'l' | 'xl';
   pulse?: boolean;
   disabled?: boolean;
@@ -62,13 +63,19 @@ export function AnimalName({ animal, letter }: { animal: Animal; letter?: string
   );
 }
 
-export function ProgressDots({ total, current }: { total: number; current: number }) {
+const STEP_ICONS = [IconWave, IconPencil, IconEar, IconBulb, IconChat];
+const STEP_NAMES = ['Zoznámenie', 'Píšem', 'Počúvam', 'Zaujímavosť', 'Po anglicky'];
+
+/** Cestička 5 krokov s obrázkami – dieťa vidí, kde je a koľko ešte zostáva. */
+export function StepPath({ current, color, deep }: { current: number; color: string; deep: string }) {
   return (
-    <div className="dots" role="progressbar" aria-valuemin={1} aria-valuemax={total} aria-valuenow={current + 1}>
-      {Array.from({ length: total }, (_, i) => (
-        <span key={i} className={`dot ${i < current ? 'done' : ''} ${i === current ? 'now' : ''}`} />
+    <ol className="step-path" style={{ '--c': color, '--d': deep } as CSSProperties} aria-label={`Krok ${Math.min(current + 1, 5)} z 5`}>
+      {STEP_ICONS.map((Icon, i) => (
+        <li key={i} className={`step ${i < current ? 'done' : ''} ${i === current ? 'now' : ''}`} title={STEP_NAMES[i]}>
+          <span className="step-dot">{i < current ? <IconCheck /> : <Icon />}</span>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }
 
@@ -90,7 +97,7 @@ export function SpeechBubble() {
   if (!text) return null;
   return (
     <div className="bubble" role="status">
-      <span className="bubble-icon" aria-hidden>💬</span> {text}
+      {text}
     </div>
   );
 }

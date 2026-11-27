@@ -40,3 +40,20 @@ export const IconParents = () => (
 export const IconSwap = () => (
   <svg viewBox="0 0 24 24" {...P}><path d="M4 8h13l-3-3" /><path d="M20 16H7l3 3" /></svg>
 );
+
+// ---------- ikony krokov cesty písmena ----------
+export const IconWave = () => (
+  <svg viewBox="0 0 24 24" {...P}><path d="M8 13V6.5a1.5 1.5 0 013 0V12" /><path d="M11 11V5a1.5 1.5 0 013 0v6" /><path d="M14 11V6.5a1.5 1.5 0 013 0V14c0 3.5-2.5 6-6 6-2.2 0-3.6-.9-4.8-2.6L4 14.2a1.5 1.5 0 012.4-1.8L8 14" /></svg>
+);
+export const IconPencil = () => (
+  <svg viewBox="0 0 24 24" {...P}><path d="M4 20l1.2-4.6L15.8 4.8a2 2 0 012.8 0l.6.6a2 2 0 010 2.8L8.6 18.8z" /><path d="M13.8 6.8l3.4 3.4" /></svg>
+);
+export const IconEar = () => (
+  <svg viewBox="0 0 24 24" {...P}><path d="M7 9a5 5 0 0110 0c0 3-2.5 3.8-3 6-.4 1.8-1.4 4-4 4" /><path d="M10 10a2 2 0 014 0" /></svg>
+);
+export const IconBulb = () => (
+  <svg viewBox="0 0 24 24" {...P}><path d="M9 17h6" /><path d="M10 20.5h4" /><path d="M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0012 3z" /></svg>
+);
+export const IconChat = () => (
+  <svg viewBox="0 0 24 24" {...P}><path d="M4 5h16v11H9l-5 4z" /><path d="M8.5 9.5h7M8.5 12.5h4.5" /></svg>
+);

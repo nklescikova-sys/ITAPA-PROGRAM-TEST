@@ -9,6 +9,8 @@ import { navigate } from '../lib/router';
 import { useStore } from '../lib/store';
 import { AnimalPic, RoundButton } from '../components/ui';
 import { IconBook, IconHome } from '../components/icons';
+import { Scenery } from '../components/Scenery';
+import { Guide } from '../components/Guide';
 
 /** posun popisu miesta pod ikonu (aby ho nezakrylo zvieratko) */
 const LABEL_DY = { tatry: -14, les: 40, dedina: 41, luka: 35, dunaj: 25 } as const;
@@ -51,14 +53,20 @@ export function MapScreen() {
 
   return (
     <div className={`screen map ${data.settings.leftHanded ? 'left' : ''}`}>
+      <Scenery />
       <header className="topbar">
-        <RoundButton label="Domov" onClick={() => navigate('/')}>
+        <RoundButton label="Domov" variant="home" onClick={() => navigate('/')}>
           <IconHome />
         </RoundButton>
-        <span className="map-title" aria-hidden>🗺️</span>
-        <RoundButton label="Knižka nálepiek" variant="sun" onClick={() => navigate('/nalepky')}>
-          <IconBook />
-        </RoundButton>
+        <span className="screen-badge map" aria-hidden>
+          🗺️
+        </span>
+        <div className="topbar-right">
+          <Guide size={64} className="guide-top" />
+          <RoundButton label="Knižka nálepiek" variant="sun" onClick={() => navigate('/nalepky')}>
+            <IconBook />
+          </RoundButton>
+        </div>
       </header>
       <main className="map-layout">
         <div className="sk-map">

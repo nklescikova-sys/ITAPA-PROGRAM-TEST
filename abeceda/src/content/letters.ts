@@ -10,6 +10,7 @@ export const APP_NAME = 'Abeceda';
 export const LETTERS: LetterContent[] = [
   {
     id: 'a',
+    colors: { main: '#6CC04A', soft: '#EAF7E1', deep: '#2F8A1E' },
     upper: 'A',
     lower: 'a',
     animal: {
@@ -46,6 +47,7 @@ export const LETTERS: LetterContent[] = [
   },
   {
     id: 'b',
+    colors: { main: '#FF9F43', soft: '#FFF1E0', deep: '#B85C00' },
     upper: 'B',
     lower: 'b',
     animal: {
@@ -63,6 +65,7 @@ export const LETTERS: LetterContent[] = [
   },
   {
     id: 'c',
+    colors: { main: '#FFC83D', soft: '#FFF8DA', deep: '#9A6E00' },
     upper: 'C',
     lower: 'c',
     animal: {
@@ -96,6 +99,7 @@ export const LETTERS: LetterContent[] = [
   },
   {
     id: 'd',
+    colors: { main: '#4FB3E8', soft: '#E3F4FD', deep: '#1D74A3' },
     upper: 'D',
     lower: 'd',
     animal: {
@@ -130,6 +134,7 @@ export const LETTERS: LetterContent[] = [
   },
   {
     id: 'e',
+    colors: { main: '#A98BE8', soft: '#F2ECFD', deep: '#6447AE' },
     upper: 'E',
     lower: 'e',
     animal: {

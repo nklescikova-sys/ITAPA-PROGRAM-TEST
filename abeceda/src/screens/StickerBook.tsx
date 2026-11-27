@@ -6,6 +6,8 @@ import { navigate } from '../lib/router';
 import { useStore } from '../lib/store';
 import { AnimalPic, RoundButton } from '../components/ui';
 import { IconBack, IconHome, IconMap, IconNext } from '../components/icons';
+import { Scenery } from '../components/Scenery';
+import { Guide } from '../components/Guide';
 
 /** Na šírku dve strany vedľa seba (otvorená knižka), na výšku jedna. */
 function usePerSpread(): number {
@@ -29,10 +31,10 @@ function tiltOf(id: string): number {
 
 /** Ozdoby na pozadí strany podľa témy (len dekorácia). */
 const DECOR: Record<StickerPage['theme'], string[]> = {
-  meadow: ['☀️', '☁️', '🌼', '🍄', '🌷'],
-  ocean: ['🐚', '🫧', '⭐', '🌊', '🫧'],
-  sunny: ['🎈', '✨', '🌈', '⭐', '🎈'],
-  berry: ['🍓', '✨', '🍒', '🌸', '🍓'],
+  meadow: ['🌼', '🌷'],
+  ocean: ['🐚', '🐠'],
+  sunny: ['🌈', '🎈'],
+  berry: ['🍓', '🌸'],
 };
 
 interface SlotProps {
@@ -143,14 +145,20 @@ export function StickerBook() {
 
   return (
     <div className={`screen book ${data.settings.leftHanded ? 'left' : ''}`}>
+      <Scenery />
       <header className="topbar">
-        <RoundButton label="Domov" onClick={() => navigate('/')}>
+        <RoundButton label="Domov" variant="home" onClick={() => navigate('/')}>
           <IconHome />
         </RoundButton>
-        <span className="map-title" aria-hidden>📒</span>
-        <RoundButton label="Mapa" onClick={() => navigate('/mapa')}>
-          <IconMap />
-        </RoundButton>
+        <span className="screen-badge book" aria-hidden>
+          📒
+        </span>
+        <div className="topbar-right">
+          <Guide size={64} className="guide-top" />
+          <RoundButton label="Mapa" variant="primary" onClick={() => navigate('/mapa')}>
+            <IconMap />
+          </RoundButton>
+        </div>
       </header>
       <main className="book-layout">
         <RoundButton label="Predchádzajúca strana" variant="sun" size="xl" disabled={current === 0} onClick={() => setSpread(current - 1)}>

@@ -64,6 +64,17 @@ export interface LetterContent {
   extra?: ExtraLetter;
   /** tip na spoločnú hru pre rodiča */
   parentTip: string;
+  /** farba písmena – dieťa podľa nej spozná, kde je (karta, pozadie cesty, cestička) */
+  colors: LetterColors;
+}
+
+export interface LetterColors {
+  /** hlavná, sýtejšia farba */
+  main: string;
+  /** jemná pastelová farba pozadia */
+  soft: string;
+  /** tmavší odtieň na text a obrysy */
+  deep: string;
 }
 
 export interface Profile {

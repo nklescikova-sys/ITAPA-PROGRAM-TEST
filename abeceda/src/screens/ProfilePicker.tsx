@@ -5,6 +5,8 @@ import { speak } from '../lib/speech';
 import { unlockAudio } from '../lib/sfx';
 import { useStore } from '../lib/store';
 import { IconPlay } from '../components/icons';
+import { Guide } from '../components/Guide';
+import { Scenery } from '../components/Scenery';
 
 /** Úvodná obrazovka: pri viacerých profiloch výber avatara, inak veľké tlačidlo „Hraj“ (odomkne zvuk). */
 export function ProfilePicker({ onPicked }: { onPicked: () => void }) {
@@ -16,7 +18,9 @@ export function ProfilePicker({ onPicked }: { onPicked: () => void }) {
 
   return (
     <div className="screen picker">
+      <Scenery />
       <h1 className="app-title big">{APP_NAME}</h1>
+      <Guide size={150} mood="happy" />
       {many ? (
         <div className="avatars">
           {data.profiles.map((p) => (
@@ -38,7 +42,7 @@ export function ProfilePicker({ onPicked }: { onPicked: () => void }) {
       ) : (
         <button
           type="button"
-          className="play-btn pulse"
+          className="play-btn"
           aria-label="Hrať"
           onClick={() => {
             unlockAudio();

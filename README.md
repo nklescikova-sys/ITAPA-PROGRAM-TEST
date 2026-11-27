@@ -101,3 +101,6 @@ A nasledujúce CSS triedy:
 
 **Vytvorené pre:** Jarnú ITAPA 2026  
 **Dátum:** 22. apríl 2026
+## Abeceda – aplikácia na učenie písmen
+
+Prototyp detskej aplikácie je v priečinku [`abeceda/`](abeceda/README.md) (vlastné README po slovensky).
